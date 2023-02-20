@@ -1,7 +1,7 @@
 package com.kata.PP_3_1_2_SpringBoot.service;
 
 import com.kata.PP_3_1_2_SpringBoot.models.User;
-import com.kata.PP_3_1_2_SpringBoot.repositories.PeopleRepository;
+import com.kata.PP_3_1_2_SpringBoot.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,26 +13,26 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class UserServiceImpl implements UserService {
 
-    private final PeopleRepository peopleRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public UserServiceImpl(PeopleRepository peopleRepository) {
-        this.peopleRepository = peopleRepository;
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Transactional
     public void saveUser(User user) {
-        peopleRepository.save(user);
+        userRepository.save(user);
     }
 
     @Override
     public List<User> findAll() {
-        return peopleRepository.findAll();
+        return userRepository.findAll();
     }
 
     @Override
     public User findUser(Long id) {
-        Optional<User> findUser = peopleRepository.findById(id);
+        Optional<User> findUser = userRepository.findById(id);
         return findUser.orElse(null);
     }
 
@@ -40,12 +40,12 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void updateUser(Long id, User updatedUser) {
         updatedUser.setId(id);
-        peopleRepository.save(updatedUser);
+        userRepository.save(updatedUser);
     }
 
     @Override
     @Transactional
     public void deleteUser(Long id) {
-        peopleRepository.deleteById(id);
+        userRepository.deleteById(id);
     }
 }
